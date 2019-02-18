@@ -15,5 +15,6 @@ import java.util.Date;
 public class MainApp007 {
     public static void main(String[] args) throws ParseException {
         String s = "0000";
+        String s1 = s + "111";
     }
 }
