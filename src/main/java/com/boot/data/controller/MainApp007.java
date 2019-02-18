@@ -15,6 +15,7 @@ import java.util.Date;
 public class MainApp007 {
     public static void main(String[] args) throws ParseException {
         String s = "0000";
-        String s2 = s + "222";
+        String s0 = s + "000";
+
     }
 }
