@@ -20,6 +20,8 @@ spring:
         max-wait: -1
         max-active: 8
     timeout: 10000
+  freemarker:
+    check-template-location: false
 
 file:
   path:
