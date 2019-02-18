@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class MainApp007 {
     public static void main(String[] args) throws ParseException {
-        String s1 = new String();
+        String s2 = "2222";
     }
 
 
