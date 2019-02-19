@@ -10,6 +10,7 @@ import org.omg.CosNaming.IstringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpRequest;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,9 +22,7 @@ import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -188,5 +187,11 @@ public class TestController {
     public String test012(MultipartFile file, String code) {
         String result = testService.upload(file);
         return result + code;
+    }
+
+    @RequestMapping("/test013")
+    public String test013(HttpServletRequest request) throws MalformedURLException {
+        URL url = new URL(request.getRequestURL().toString());
+        return url.getHost();
     }
 }
