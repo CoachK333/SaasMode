@@ -1,18 +1,27 @@
 package com.boot.data.entity;
 
-
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
+/**
+ * @author 98548
+ * @create 2019-02-19 15:03
+ * @description
+ */
 @Data
 @Entity
-public class User {
+@Table(name = "t_user")
+public class User implements Serializable {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String name;
-    private String dep;
+
+    @Column(name = "description")
+    private String desc;
 
 }
