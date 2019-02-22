@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +27,12 @@ public final class DataSourceUtil {
         HikariDataSource ds = new HikariDataSource();
         ds.setUsername(dbInfo.get("User").toString());
         ds.setPassword(dbInfo.get("Password").toString());
-        ds.setJdbcUrl(dbInfo.get("dbUrl").toString());
+        String dbUrl = dbInfo.get("dbUrl").toString();
+        if (!dbUrl.contains("serverTimezone")) {
+            ZoneId zoneId = ZoneId.systemDefault();
+            dbUrl = dbUrl + "&serverTimezone=" + zoneId;
+        }
+        ds.setJdbcUrl(dbUrl);
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
         // Maximum waiting time for a connection from the pool
         ds.setConnectionTimeout(20000);
