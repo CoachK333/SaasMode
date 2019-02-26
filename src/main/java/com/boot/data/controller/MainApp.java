@@ -29,6 +29,7 @@ public class MainApp {
         System.out.println(zoneId.getId());
         System.out.println(zoneId);
         System.out.println(zoneId.toString());
+        System.out.println("s.xls".endsWith(".xls"));
 
     }
 

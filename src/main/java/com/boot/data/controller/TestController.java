@@ -39,4 +39,9 @@ public class TestController {
         List<User> users = userRepository.findAll();
         return JSON.toJSONString(users);
     }
+
+    @GetMapping("/test001")
+    public String test001() {
+        return userRepository.getAll().toString();
+    }
 }

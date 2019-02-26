@@ -79,7 +79,7 @@ public class MasterDatabaseConfig {
         properties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, dsProvider);
         properties.put(AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantResolver);
 
-        properties.put(org.hibernate.cfg.Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+        properties.put(org.hibernate.cfg.Environment.DIALECT, "org.hibernate.dialect.MySQL5InnoDBDialect");
         properties.put(org.hibernate.cfg.Environment.SHOW_SQL, true);
 //        properties.put(org.hibernate.cfg.Environment.FORMAT_SQL, true);
         properties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "none");
