@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.naming.Name;
 import java.util.List;
 
 /**
@@ -42,6 +43,12 @@ public class TestController {
 
     @GetMapping("/test001")
     public String test001() {
-        return userRepository.getAll().toString();
+        return JSON.toJSONString(userRepository.getAll());
+    }
+
+    @GetMapping("/test002")
+    public String test002(String name) {
+        Integer exo = userRepository.exo(name);
+        return JSON.toJSONString(exo);
     }
 }

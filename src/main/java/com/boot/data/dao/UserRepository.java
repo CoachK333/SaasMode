@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM t_user", nativeQuery = true)
     List<Object[]> getAll();
+
+    @Query(nativeQuery = true, value = "SELECT 1 FROM t_user WHERE name = ?1")
+    Integer exo(String name);
 }

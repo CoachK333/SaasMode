@@ -1,6 +1,8 @@
 package com.boot.data.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "t_user")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable {
 
     @Id
