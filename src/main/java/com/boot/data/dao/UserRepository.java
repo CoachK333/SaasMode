@@ -1,6 +1,8 @@
 package com.boot.data.dao;
 
 import com.boot.data.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -19,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(nativeQuery = true, value = "SELECT 1 FROM t_user WHERE name = ?1")
     Integer exo(String name);
+
+    @Query(value = "SELECT * FROM t_user", nativeQuery = true)
+    Page<User> list(Pageable pageable);
 }
