@@ -23,8 +23,7 @@ import java.util.*;
 public class MainApp011 {
 
     public static void main(String[] args) throws UnsupportedEncodingException, MalformedURLException {
-        List<Map<String, String>> list = new ArrayList<>();
-
+        System.out.println("000");
     }
 
 }
