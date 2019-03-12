@@ -1,19 +1,11 @@
 package com.boot.data.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.boot.data.entity.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author 98548
@@ -21,7 +13,7 @@ import java.util.*;
  * @description
  */
 @Slf4j
-public class MainApp {
+public class MainApp010 {
 
     public static void main(String[] args) throws Exception {
 //
