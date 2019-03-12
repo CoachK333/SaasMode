@@ -1,8 +1,6 @@
 package com.boot.data.util;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Date;
 
 /**
@@ -16,5 +14,16 @@ public class DateUtils {
         ZoneId zoneId = ZoneId.systemDefault();
         Instant instant = localDate.atStartOfDay(zoneId).toInstant();
         return Date.from(instant);
+    }
+
+    public static Date localDateTime2Date(LocalDateTime localDateTime) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+        Date date = Date.from(zonedDateTime.toInstant());
+        return date;
+    }
+
+    public static LocalDate date2LocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
