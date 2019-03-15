@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.naming.Name;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author 98548
@@ -30,7 +34,7 @@ import java.util.*;
  * @description
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/test")
 @Api("/用户查询")
 public class TestController {
 
@@ -133,6 +137,15 @@ public class TestController {
         System.out.println(users.getTotalPages());
         System.out.println(users.getSize());
         return JSON.toJSONString(users.getContent());
+    }
+
+    @GetMapping("/test005")
+    public String tests005() {
+        User user = new User();
+        user.setName("第五人格");
+        user.setComment("<html>哈哈哈</html>");
+        userRepository.save(user);
+        return "ok";
     }
 
 }

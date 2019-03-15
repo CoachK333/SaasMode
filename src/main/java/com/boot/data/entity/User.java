@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
 
 /**
  * @author 98548
@@ -27,5 +28,8 @@ public class User implements Serializable {
 
     @Column(name = "description")
     private String desc;
+
+    @Column(columnDefinition = "text comment '富文本描述'")
+    private String comment;
 
 }
