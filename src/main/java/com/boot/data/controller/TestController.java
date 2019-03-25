@@ -1,10 +1,15 @@
 package com.boot.data.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.boot.data.dao.ProductRepository;
 import com.boot.data.dao.UserRepository;
+import com.boot.data.entity.Production;
 import com.boot.data.entity.User;
+import com.boot.data.service.ProductService;
 import com.boot.data.util.DateUtils;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -13,12 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,11 +39,14 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/test")
-@Api("/用户查询")
+@Api("/测试接口")
 public class TestController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/add")
     public String addOne(String code, String name) {
@@ -148,4 +155,44 @@ public class TestController {
         return "ok";
     }
 
+    @PostMapping("/test006")
+    public String test006(String id) {
+        if (StringUtils.isBlank(id)) {
+            return "参数为空!";
+        }
+        Production production = productService.getOne(id);
+        String version = production.getVersion();
+        return JSON.toJSONString(production);
+    }
+
+    @PostMapping(value = "/test007")
+    public String test007(List<String> list) {
+        if (list == null || list.isEmpty()) {
+            return "param is null!";
+        }
+        for (Object o : list) {
+            System.out.println(o.getClass() + " : " + o.toString());
+        }
+        return "ok";
+    }
+
+    @PostMapping(value = "/test008")
+    public String test008(String id) {
+        String[] strings = id.split(",");
+        System.out.println(JSON.toJSON(strings));
+        return "ok";
+    }
+
+    @PostMapping(value = "/test009")
+    public String test009(HttpServletRequest request) {
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+        System.out.println(files.size());
+        return "ok";
+    }
+
+    @GetMapping(value = "/test010")
+    public String test010(Long id) {
+        System.out.println(id);
+        return "ok";
+    }
 }
