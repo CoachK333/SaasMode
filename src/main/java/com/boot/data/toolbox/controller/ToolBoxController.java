@@ -29,7 +29,7 @@ public class ToolBoxController {
     private ToolBoxService toolBoxService;
 
     @PostMapping("/updateOrAdd")
-    @ApiOperation("工具箱--更新/添加工具箱")
+    @ApiOperation("工具箱--更新/添加工具")
     public Result updateOrAdd(HttpServletRequest request,
                               String title,
                               String category,
@@ -41,8 +41,6 @@ public class ToolBoxController {
 
         return null;
     }
-    //工具分类列表
-
     //工具图标上传
 
     //附件(其他附件,富文本附件)上传

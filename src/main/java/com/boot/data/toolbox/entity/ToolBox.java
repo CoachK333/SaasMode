@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 98548
@@ -30,37 +31,51 @@ public class ToolBox implements Serializable {
     @Column(name = "label", columnDefinition = "VARCHAR(255) COMMENT '工具箱关键字(或标签)'")
     private String label;
 
-    @Column(name = "iconID", columnDefinition = "BIGINT(20) COMMENT '图标ID'")
+    @Column(name = "icon_id", columnDefinition = "BIGINT(20) COMMENT '图标ID'")
     private Long iconID;
-
 
     @Column(name = "instructions", columnDefinition = "TEXT COMMENT '使用说明'")
     private String instructions;
 
-    @Column(name = "attachmentIDs", columnDefinition = "VARCHAR(255) COMMENT '工具附件ID(多个)'")
+    @Column(name = "attachment_ids", columnDefinition = "VARCHAR(255) COMMENT '工具附件ID(多个)'")
     private String attachmentIDs;
-    @Column(name = "additionalAttachmentIDs", columnDefinition = "VARCHAR(255) COMMENT '其他附件ID(多个)'")
+    @Column(name = "additional_attachment_ids", columnDefinition = "VARCHAR(255) COMMENT '其他附件ID(多个)'")
     private String additionalAttachmentIDs;
 
-    @Column(name = "createUserID", columnDefinition = "BIGINT(20) COMMENT '创建人ID'")
+    @Column(name = "create_user_id", columnDefinition = "BIGINT(20) COMMENT '创建人ID'")
     private Long createUserID;
-    @Column(name = "updateUserID", columnDefinition = "BIGINT(20) COMMENT '修改人ID'")
+    @Column(name = "update_user_id", columnDefinition = "BIGINT(20) COMMENT '修改人ID'")
     private Long updateUserID;
 
-    @Column(name = "createUser", columnDefinition = "VARCHAR(255) COMMENT '创建人'")
+    @Column(name = "create_user", columnDefinition = "VARCHAR(255) COMMENT '创建人'")
     private String createUser;
-    @Column(name = "updateUser", columnDefinition = "VARCHAR(255) COMMENT '最近修改人'")
+    @Column(name = "update_user", columnDefinition = "VARCHAR(255) COMMENT '最近修改人'")
     private String updateUser;
 
-    @Column(name = "createDate", columnDefinition = "datetime COMMENT '创建日期'")
+    @Column(name = "create_date", columnDefinition = "datetime COMMENT '创建日期'")
     private Date createDate;
-    @Column(name = "updateDate", columnDefinition = "datetime COMMENT '修改日期'")
+    @Column(name = "update_date", columnDefinition = "datetime COMMENT '修改日期'")
     private Date updateDate;
 
     @Column(name = "version", columnDefinition = "VARCHAR(255) COMMENT '当前版本号'")
     private String version;
 
-    @Column(name = "dataState", columnDefinition = "tinyint(4) unsigned COMMENT '数据状态(1:正常使用;255:删除)'")
+    @Column(name = "data_state", columnDefinition = "tinyint(4) unsigned COMMENT '数据状态(1:正常使用;255:删除)'")
     private Integer dataState;
+
+
+    @Transient
+    private boolean revocable;      //是否可删除
+    @Transient
+    private boolean resubmittable;  //是否可修改
+    @Transient
+    private boolean downloadable;   //是否可下载
+
+    @Transient
+    private List<ToolBoxLog> toolBoxLogs;
+    @Transient
+    private List<HyhtFile> attachments;
+    @Transient
+    private List<HyhtFile> addtionalAttachments;
 
 }

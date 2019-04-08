@@ -1,7 +1,6 @@
 package com.boot.data.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.boot.data.dao.ProductRepository;
 import com.boot.data.dao.UserRepository;
 import com.boot.data.entity.Production;
 import com.boot.data.entity.User;
@@ -9,12 +8,12 @@ import com.boot.data.service.ProductService;
 import com.boot.data.util.DateUtils;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +46,9 @@ public class TestController {
 
     @Autowired
     private ProductService productService;
+
+    @Value("${path123}")
+    private String path123;
 
     @PostMapping("/add")
     public String addOne(String code, String name) {
@@ -192,7 +194,20 @@ public class TestController {
 
     @GetMapping(value = "/test010")
     public String test010(Long id) {
-        System.out.println(id);
+        System.out.println(id + path123);
         return "ok";
+    }
+
+    @GetMapping(value = "/test011")
+    public String test011(HttpServletRequest request, Long id, String dateStr) {
+        String code = request.getHeader("code");
+        LocalDate parse = null;
+        try {
+            parse = LocalDate.parse(dateStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "日期格式有误!";
+        }
+        return code + " : " + String.valueOf(id) + "<" + parse.toString() + ">";
     }
 }

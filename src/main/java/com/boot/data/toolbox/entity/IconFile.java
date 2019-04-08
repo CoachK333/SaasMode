@@ -1,7 +1,6 @@
 package com.boot.data.toolbox.entity;
 
 import lombok.Data;
-import org.openxmlformats.schemas.drawingml.x2006.chart.STRadarStyle;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +15,7 @@ import java.util.Date;
 @Table(name = "t_icon_file")
 public class IconFile {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "BIGINT  COMMENT '头像id'")
     private Long id;
     @Column(name = "file_name", columnDefinition = "VARCHAR(255) COMMENT '文件名称'")
@@ -25,8 +24,10 @@ public class IconFile {
     private String fileExt;
     @Column(name = "bussiness_type", columnDefinition = "tinyint unsigned COMMENT '业务类型(1:工具箱)'")
     private Integer businessType;
-    @Column(name = "is_default", columnDefinition = "bit(1) NOT NULL COMMENT '是否为默认头像'")
-    private boolean isDefault;
+    @Column(name = "business_id", columnDefinition = "BIGINT  COMMENT '业务id'")
+    private Long businessID;
+    @Column(name = "default_flag", columnDefinition = "bit(1) NOT NULL COMMENT '是否为默认头像(0:不是;1:是)'")
+    private Boolean defaultFlag;
     @Column(name = "order_index", columnDefinition = "TINYINT COMMENT '排序规则'")
     private Integer orderIndex;
     @Column(name = "file_path", columnDefinition = "TEXT COMMENT '文件路径'")

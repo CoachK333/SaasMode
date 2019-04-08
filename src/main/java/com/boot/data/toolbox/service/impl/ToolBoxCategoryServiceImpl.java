@@ -1,6 +1,7 @@
 package com.boot.data.toolbox.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.boot.data.toolbox.dao.ToolBoxCategoryRepository;
 import com.boot.data.toolbox.dao.ToolBoxRepository;
 import com.boot.data.toolbox.entity.ToolBox;
@@ -24,8 +25,6 @@ public class ToolBoxCategoryServiceImpl implements ToolBoxCategoryService {
 
     @Autowired
     private ToolBoxCategoryRepository toolBoxCategoryRepository;
-    @Autowired
-    private ToolBoxRepository toolBoxRepository;
 
     @Override
     public ToolBoxCategory updateOrAdd(String id, String title, String pNo, String orderIndex) {
@@ -56,16 +55,19 @@ public class ToolBoxCategoryServiceImpl implements ToolBoxCategoryService {
         return formTree(categories, 0L);
     }
 
-    private List<ToolBoxCategory> formTree(List<ToolBoxCategory> elements, Long pid) {
+
+    private List<ToolBoxCategory> formTree(List<ToolBoxCategory> list, Long pid) {
         List<ToolBoxCategory> childList = new ArrayList<>();
-        for (ToolBoxCategory element : elements) {
-            if (pid.equals(element.getPID())) {
-                childList.add(element);
+
+        for (ToolBoxCategory toolBoxCategory : list) {
+            if (pid.equals(toolBoxCategory.getPID())) {
+                childList.add(toolBoxCategory);
             }
         }
-        for (ToolBoxCategory element : elements) {
-            element.setCategories(formTree(elements, element.getId()));
+        for (ToolBoxCategory toolBoxCategory : childList) {
+            toolBoxCategory.setCategories(formTree(list, toolBoxCategory.getId()));
         }
+
         if (childList.isEmpty()) {
             return null;
         }

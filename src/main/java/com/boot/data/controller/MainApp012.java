@@ -1,20 +1,17 @@
 package com.boot.data.controller;
 
-import jdk.nashorn.internal.ir.ReturnNode;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
+import springfox.documentation.spring.web.json.Json;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 /**
@@ -27,19 +24,9 @@ public class MainApp012 {
 
     public static void main(String[] args) throws SQLException {
 
-        Map map = getMap(null);
-        System.out.println(map.get("string"));
-
-        String s = "0.0.101";
-        System.out.println(versionIteration(s));
-
-        try {
-            MultipartFile multipartFile = new MockMultipartFile("file", new FileInputStream("G:\\java相关\\视频\\lucene_solr\\day03\\代码\\solr-jd\\WebContent\\images\\20071124223011438.jpg"));
-            Image image = ImageIO.read(multipartFile.getInputStream());
-            System.out.println(image != null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LocalDateTime time = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        String s = time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        System.out.println(s);
 
     }
 

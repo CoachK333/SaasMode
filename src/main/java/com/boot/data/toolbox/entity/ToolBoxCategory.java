@@ -19,12 +19,12 @@ public class ToolBoxCategory implements Serializable {
 
     private static final long serialVersionUID = -2458562972451164194L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "BIGINT  COMMENT '工具分类ID'")
     private Long id;
     @Column(name = "name", columnDefinition = "VARCHAR(255) COMMENT '分类标题'")
     private String name;
-    @Column(name = "pID", columnDefinition = "BIGINT  COMMENT '父级ID'")
+    @Column(name = "pid", columnDefinition = "BIGINT  COMMENT '父级ID'")
     private Long pID;
     @Column(name = "order_index", columnDefinition = "SMALLINT COMMENT '排序规则'")
     private short orderIndex;
