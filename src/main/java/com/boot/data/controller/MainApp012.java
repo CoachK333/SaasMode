@@ -1,9 +1,11 @@
 package com.boot.data.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.springframework.web.client.RestTemplate;
+import org.w3c.dom.ls.LSInput;
 import springfox.documentation.spring.web.json.Json;
 
 import java.net.URLEncoder;
@@ -12,7 +14,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author 98548
@@ -23,10 +28,6 @@ import java.util.Map;
 public class MainApp012 {
 
     public static void main(String[] args) throws SQLException {
-
-        LocalDateTime time = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-        String s = time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(s);
 
     }
 

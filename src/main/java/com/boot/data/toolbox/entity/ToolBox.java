@@ -1,6 +1,7 @@
 package com.boot.data.toolbox.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,6 +38,9 @@ public class ToolBox implements Serializable {
     @Column(name = "instructions", columnDefinition = "TEXT COMMENT '使用说明'")
     private String instructions;
 
+    @Column(name = "descriptions", columnDefinition = "TEXT COMMENT '工具描述'")
+    private String descriptions;
+
     @Column(name = "attachment_ids", columnDefinition = "VARCHAR(255) COMMENT '工具附件ID(多个)'")
     private String attachmentIDs;
     @Column(name = "additional_attachment_ids", columnDefinition = "VARCHAR(255) COMMENT '其他附件ID(多个)'")
@@ -53,8 +57,10 @@ public class ToolBox implements Serializable {
     private String updateUser;
 
     @Column(name = "create_date", columnDefinition = "datetime COMMENT '创建日期'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     @Column(name = "update_date", columnDefinition = "datetime COMMENT '修改日期'")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
 
     @Column(name = "version", columnDefinition = "VARCHAR(255) COMMENT '当前版本号'")
