@@ -8,8 +8,10 @@ import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.ls.LSInput;
 import springfox.documentation.spring.web.json.Json;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,6 +30,8 @@ import java.util.stream.Collectors;
 public class MainApp012 {
 
     public static void main(String[] args) throws SQLException {
+        System.out.println((float) 100 / 11);
+
 
     }
 
