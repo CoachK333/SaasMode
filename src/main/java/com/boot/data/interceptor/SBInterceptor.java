@@ -18,7 +18,8 @@ public class SBInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         System.out.println("被傻逼拦截了...");
+        System.out.println("然后又放开了...");
 
-        return false;
+        return true;
     }
 }
