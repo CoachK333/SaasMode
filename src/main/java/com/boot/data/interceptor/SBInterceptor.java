@@ -14,12 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class SBInterceptor extends HandlerInterceptorAdapter {
 
+    int i = 0;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        request.getSession().setAttribute("t", ++i);
 
         System.out.println("被傻逼拦截了...");
         System.out.println("然后又放开了...");
-
+        System.out.println("当前用户有:【" + i + "】个");
         return true;
     }
 }

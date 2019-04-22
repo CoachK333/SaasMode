@@ -5,13 +5,23 @@ import com.boot.data.temp.service.LeaveService;
 import com.boot.data.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * @author 98548
@@ -23,10 +33,13 @@ public class MainApp012 {
 
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    public static void main(String[] args) throws SQLException, IOException {
 
-    public static void main(String[] args) throws SQLException, MalformedURLException {
 
+        Properties properties = FileUtils.getProperties("C:\\Users\\98548\\IdeaProjects\\hello-springboot\\helloworld-data\\src\\main\\resources\\application.yml");
 
+        System.out.println(properties.getProperty("file.path"));
+        System.out.println(properties.getProperty("chakanyinyong"));
     }
 
 

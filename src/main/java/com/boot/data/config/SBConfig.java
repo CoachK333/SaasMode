@@ -22,6 +22,6 @@ public class SBConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sbInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/test/**","");
+                .excludePathPatterns("");
     }
 }

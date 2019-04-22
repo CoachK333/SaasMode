@@ -7,6 +7,7 @@ import com.boot.data.entity.User;
 import com.boot.data.service.ProductService;
 import com.boot.data.util.DateUtils;
 import io.swagger.annotations.Api;
+import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -49,6 +50,10 @@ public class TestController {
 
     @Value("${path123}")
     private String path123;
+    @Value("${chakanyinyong}")
+    private String chakanyinyong;
+    @Value("${file.path}")
+    private String filePath;
 
     @PostMapping("/add")
     public String addOne(String code, String name) {
@@ -209,5 +214,10 @@ public class TestController {
             return "日期格式有误!";
         }
         return code + " : " + String.valueOf(id) + "<" + parse.toString() + ">";
+    }
+
+    @GetMapping(value = "/test012")
+    public String test012() {
+        return filePath + chakanyinyong;
     }
 }
