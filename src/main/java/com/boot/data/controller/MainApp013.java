@@ -1,16 +1,23 @@
 package com.boot.data.controller;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.alibaba.fastjson.JSON;
+import it.sauronsoftware.jave.AudioUtils;
+import org.springframework.http.HttpMethod;
 
-import java.io.FileInputStream;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Currency;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * @author 98548
@@ -18,17 +25,17 @@ import java.util.Currency;
  * @description
  */
 public class MainApp013 {
-    public static void main(String[] args) throws IOException {
-        long t0 = System.currentTimeMillis();
-        for (int i = 0; i < 100; i++) {
-            for (int i1 = 0; i1 < 100; i1++) {
-                for (int i2 = 0; i2 < 100; i2++) {
-                    System.out.println("1111111111111111");
-                }
-            }
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+
+    }
+
+    static class MyThread extends Thread {
+        @Override
+        public void run() {
+            String s = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS").format(LocalDateTime.now()) + new Random().nextInt(10);
+            System.out.println("DEM-" + s);
         }
-        long t1 = System.currentTimeMillis();
-        System.out.println((double) (t1 - t0) / 1000);
     }
 
 

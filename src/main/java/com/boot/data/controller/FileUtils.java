@@ -44,5 +44,9 @@ public class FileUtils {
         return properties;
     }
 
+    public synchronized static String generateFileName() {
+        return null;
+    }
+
 
 }
