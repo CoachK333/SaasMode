@@ -2,6 +2,7 @@ package com.boot.data.controller;
 
 import com.alibaba.fastjson.JSON;
 import it.sauronsoftware.jave.AudioUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -26,7 +27,7 @@ import java.util.Random;
  */
 public class MainApp013 {
     public static void main(String[] args) throws IOException, InterruptedException {
-
+        System.out.println(FileBusinessCode.valueOf("DEMAND").getKey());
 
     }
 

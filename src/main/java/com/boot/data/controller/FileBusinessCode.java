@@ -1,12 +1,12 @@
 package com.boot.data.controller;
 
 public enum FileBusinessCode {
-    leave("leave", 130),//请假
-    dutyscheduling("dutyscheduling", 191),//排班审批
-    toolbox1("toolbox", 201),//工具箱附件
-    toolbox2("toolbox", 202),//工具箱其他附件
-    demand("demand", 203)//需求
-    ;
+    LEAVE("leave", 130),//请假
+    DUTYSCHEDULING("dutyscheduling", 191),//排班审批
+    TOOLBOX1("toolbox", 201),//工具箱附件
+    TOOLBOX2("toolbox", 202),//工具箱其他附件
+    DEMAND("demand", 203),//需求
+    TEMP("temp", 204),;
 
     private String key;
     private Integer value;
