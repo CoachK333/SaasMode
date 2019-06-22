@@ -1,12 +1,16 @@
 package com.boot.data.controller;
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.boot.data.dao.UserRepository;
+import com.boot.data.dto.Result;
 import com.boot.data.entity.Production;
 import com.boot.data.entity.User;
 import com.boot.data.service.ProductService;
 import com.boot.data.util.DateUtils;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -18,19 +22,27 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Exchanger;
 
 /**
  * @author 98548
@@ -40,6 +52,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/test")
 @Api("/测试接口")
+@Slf4j
 public class TestController {
 
     @Autowired
@@ -50,10 +63,14 @@ public class TestController {
 
     @Value("${path123}")
     private String path123;
-    @Value("${chakanyinyong}")
-    private String chakanyinyong;
+    //    @Value("${chakanyinyong}")
+//    private String chakanyinyong;
     @Value("${file.path}")
     private String filePath;
+    @Value("${zdurl.auth}")
+    private String zdAuth;
+    @Value("${zdurl.auth.headers.Referer}")
+    private String zdAuthHeaderRefer;
 
     @PostMapping("/add")
     public String addOne(String code, String name) {
@@ -218,6 +235,68 @@ public class TestController {
 
     @GetMapping(value = "/test012")
     public String test012() {
-        return filePath + chakanyinyong;
+//        return filePath + chakanyinyong;
+        return filePath;
+    }
+
+    @PostMapping(value = "/test013")
+    public String test013(String token) {
+
+        //请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Refer", zdAuthHeaderRefer);
+        //请求参数
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("token", token);
+        //请求体
+        HttpEntity httpEntity = new HttpEntity(params, headers);
+//        zdAuth.indexOf()
+        //url
+        String domainUrl = zdAuth.replace("domainUrl", "http://dev.zdha.cn");
+        domainUrl = domainUrl + "?token=" + token;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(domainUrl, HttpMethod.GET, httpEntity, String.class);
+        String body = responseEntity.getBody();
+
+        System.out.println("domainURL:  " + domainUrl);
+        JSONObject jsonObject = JSONUtil.parseObj(body);
+
+        return jsonObject.toString();
+    }
+
+    @GetMapping(value = "/test014")
+    public Result test014() {
+        Page<Production> productionPage = productService.getAll();
+        Result result = new Result();
+        result.setResult(productionPage);
+        return result;
+    }
+
+    @GetMapping("/download")
+    public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        File file = new File("C:\\Users\\98548\\Desktop\\myfile.xls");
+
+        response.setContentType("application/force-download");
+//        response.setContentType("application/octet-stream");
+//        response.setContentType("application/vnd.ms-excel");
+
+//        response.addHeader("Content-Disposition", "attachment;fileName=" + "排班审批模板.xls");
+        String fileName = new String("排班审批模板.xls".getBytes("UTF-8"), "ISO8859-1");
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
+
+        response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        response.addHeader("content-length", String.valueOf(file.length()));
+        byte[] buffer = new byte[10240];
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file)); OutputStream os = response.getOutputStream()) {
+            int i;
+            while ((i = bis.read(buffer)) != -1) {
+                os.write(buffer, 0, i);
+            }
+        } catch (IOException e) {
+            log.error("文件下载失败:{}", e);
+            throw new Exception("文件下载失败!");
+        }
+        return;
     }
 }

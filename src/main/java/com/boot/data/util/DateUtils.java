@@ -226,4 +226,15 @@ public class DateUtils {
     public static long countDays(LocalDateTime startDate, LocalDateTime endDate) {
         return endDate.toLocalDate().toEpochDay() - startDate.toLocalDate().toEpochDay();
     }
+
+    /**
+     * 获取两天之间的天数
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static long countDays(LocalDate startDate, LocalDate endDate) {
+        return endDate.toEpochDay() - startDate.toEpochDay();
+    }
 }

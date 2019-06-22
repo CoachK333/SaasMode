@@ -31,7 +31,7 @@ spring:
   freemarker:
     check-template-location: false
 
-chakanyinyong: ${file.path}
+#chakanyinyong: ${file.path}
 
 file:
   path:
@@ -41,3 +41,9 @@ path123: E:\test\123
 shadiao: 呵呵
 傻吊: cnm
 file.path: 123
+
+zdurl:
+  auth: domainUrl/right/authtoken?token={authToken}
+zdurl.auth:
+  headers:
+    Referer: http://cma.zdha.cn

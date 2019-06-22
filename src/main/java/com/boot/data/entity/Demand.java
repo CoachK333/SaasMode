@@ -1,60 +1,91 @@
 package com.boot.data.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author 98548
- * @create 2019-04-30 9:26
+ * @create 2019-05-09 9:45
  * @description
  */
-//@Entity
-//@Table(name = "t_demand")//原表+日志表
+@Entity
+@Table(name = "t_demand")
+@Data
 public class Demand {
-    private Long id;
-
-    private String title;
-
-    private String content;
-
-    private String supplement;//补录
-
-
-    private Long createUserID;
-    private String createUser;
-    private Date createDate;
-
-    private Long updateUserID;
-    private String updateUser;
-    private Date updateDate;
-
-    private Long handlerID;
-
-    private String handlerName;
-
-    private String createMobile;//来电电话
-
-    private Long createDepartmentID;
-
-    private String createDepartment;
-
-    private String attachmentIDs;//需求附件(多个)
-
-    private Long itilServiceID;
-    //关联字段:1.服务目录;2.会议;3.项目
-    private Long preBusinessItilServiceID;
-    private Long finalBusinessItilServiceID;
-    private Long preSupportItilServiceID;
-    private Long finalSupportItilServiceID;
-
-    private Long receptionCallLogID;//;来电日志
-
-    private Long meetingID;
-
+    @Id
+    @Column(name = "demand_id", columnDefinition = "BIGINT COMMENT '需求id'")
+    private Long demandID;
+    @Column(name = "demand_no", columnDefinition = "VARCHAR(64) COMMENT '需求编号'")
+    private String demandNO;
+    @Column(name = "request_person", columnDefinition = "VARCHAR(50) COMMENT '申告人'")
+    private String requestPerson;
+    @Column(name = "request_person_id", columnDefinition = "BIGINT COMMENT '申告人ID'")
+    private Long requestPersonID;
+    @Column(name = "request_tel_no", columnDefinition = "VARCHAR(50) COMMENT '来电号码'")
+    private String requestTelNo;
+    @Column(name = "request_source", columnDefinition = "TINYINT(4) unsigned COMMENT '需求来源(0:微信,1:pc,2:手机,3:app,4:钉钉)'")
+    private Integer requestSource;
+    @Column(name = "business_itil_service_id", columnDefinition = "BIGINT COMMENT '服务目录ID'")
+    private Long businessItilServiceID;
+    @Column(name = "department_id", columnDefinition = "BIGINT COMMENT '部门ID(申请部门)'")
+    private Long departmentID;
+    @Column(name = "department_address", columnDefinition = "VARCHAR(200) COMMENT '部门地址'")
+    private String departmentAddress;
+    @Column(name = "department_tel_no", columnDefinition = "VARCHAR(50) COMMENT '部门电话'")
+    private String departmentTelNo;
+    @Column(name = "calllog_id", columnDefinition = "BIGINT COMMENT '来电ID'")
+    private Long callLogID;
+    @Column(name = "demand_title", columnDefinition = "VARCHAR(500) COMMENT '需求标题'")
+    private String demandTitle;
+    @Column(name = "demand_description", columnDefinition = "LONGTEXT COMMENT '需求描述'")
+    private String demandDescription;
+    @Column(name = "supplement_count", columnDefinition = "INT(11) COMMENT '评论总数")
+    private Long supplementCount;
+    @Column(name = "demand_count", columnDefinition = "INT(11) COMMENT '所有的我也要提交此 需求和补录此需求的 总数'")
+    private Long demandCount;
+    @Column(name = "project_id", columnDefinition = "BIGINT COMMENT '项目ID'")
     private Long projectID;
-
-    private Integer channel;//(1.微信;2.钉钉;3.PC)
-
+    @Column(name = "meeting_id", columnDefinition = "BIGINT COMMENT '会议ID'")
+    private Long meetingID;
+    @Column(name = "incident_id", columnDefinition = "BIGINT COMMENT '事件ID'")
+    private Long incidentID;
+    @Column(name = "priority_type", columnDefinition = "TINYINT(4) unsigned COMMENT '优先级'")
+    private Integer priorityType;
+    @Column(name = "importance_level", columnDefinition = "TINYINT(4) unsigned COMMENT '重要级别'")
+    private Integer importanceLevel;
+    @Column(name = "current_user_id", columnDefinition = "BIGINT COMMENT '当前处理人'")
+    private Long currentUserID;
+    @Column(name = "current_state", columnDefinition = "TINYINT(4) unsigned COMMENT '当前状态(1:收集,2:整理)'")
+    private Integer currentState;
+    @Column(name = "order_index", columnDefinition = "INT(11) COMMENT '排序'")
+    private Long orderIndex;
+    @Column(name = "create_user_id", columnDefinition = "BIGINT COMMENT '创建人ID'")
+    private Long createUserID;
+    @Column(name = "create_user", columnDefinition = "VARCHAR(50) COMMENT '创建人'")
+    private String createUser;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Column(name = "create_date", columnDefinition = "DATETIME COMMENT '创建时间'")
+    private Date createDate;
+    @Column(name = "update_user_id", columnDefinition = "BIGINT COMMENT '修改人ID'")
+    private Long updateUserID;
+    @Column(name = "update_user", columnDefinition = "VARCHAR(50) COMMENT '修改人'")
+    private String updateUser;
+    @Column(name = "update_date", columnDefinition = "DATETIME COMMENT '修改时间'")
+    private Date updateDate;
+    @Column(name = "data_state", columnDefinition = "TINYINT(4) unsigned COMMENT '数据状态(1:有效,255删除)'")
     private Integer dataState;
+    @Column(name = "file_ids", columnDefinition = "VARCHAR(50) COMMENT '上传附件IDs以,拆分'")
+    private String fileIds;
+    @Column(name = "collated_content", columnDefinition = "TEXT COMMENT '整理内容'")
+    private String collatedContent;
+
+    @Transient
+    private String departmentName;
+    @Transient
+    private String demanHandler;
+    @Transient
+    private Integer supplementType;//(1:我要补录此需求;2.我也要申告此需求)
 }
