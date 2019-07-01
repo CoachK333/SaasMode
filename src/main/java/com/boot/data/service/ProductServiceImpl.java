@@ -1,14 +1,17 @@
 package com.boot.data.service;
 
+import com.alibaba.fastjson.JSON;
 import com.boot.data.dao.ProductRepository;
+import com.boot.data.entity.Product;
 import com.boot.data.entity.Production;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -21,6 +24,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public Production getOne(String id) {

@@ -41,7 +41,7 @@ public class MainApp017 {
         para.setAlignment(ParagraphAlignment.CENTER);
         para.setIndentationLeft(2);
         run = para.createRun();
-        run.setText("                                         申请时间：    年    月    日");
+        run.setText("                                         申请时间：      年    月    日");
         run.setFontFamily("华文仿宋");
         run.setFontSize(12);//小四
 
@@ -49,13 +49,10 @@ public class MainApp017 {
         XWPFTableRow row;
         XWPFTableCell cell;
 
-//        table.setWidth(138 * 15 * 4);
-//        table.getCTTbl().addNewTblPr().addNewTblLayout().setType(STTblLayoutType.FIXED);
-
         row = table.getRow(0);
         row.setHeight(563);
         cell = row.getCell(0);
-        fillCell(cell, "申请人", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 1711);
+        fillCell(cell, "申请人", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 1711);
 
         table.getRow(1).setHeight(563);
 
@@ -66,39 +63,39 @@ public class MainApp017 {
         row = table.getRow(3);
         row.setHeight(563);
         cell = row.getCell(0);
-        fillCell(cell, "加班时间", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 1711);
+        fillCell(cell, "加班时间", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 1711);
         addNewMerge(table, 3, 4, 0, 0);
         XWPFTableCell row02Cell02 = row.getCell(1);
-        fillCell(row02Cell02, "起", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row02Cell02, "起", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
 
         XWPFTableCell row02Cell03 = row.getCell(2);
-        fillCell(row02Cell03, "止", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row02Cell03, "止", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
 
         XWPFTableCell row02Cell04 = row.getCell(3);
-        fillCell(row02Cell04, "时长（小时）", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row02Cell04, "时长（小时）", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
 
 
         XWPFTableRow row03 = table.getRow(4);
         row03.setHeight(563);
         XWPFTableCell row03Cell001 = row03.getCell(1);
-        fillCell(row03Cell001, "  月  日  时", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row03Cell001, "   月   日   时", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
         XWPFTableCell row03Cell002 = row03.getCell(2);
-        fillCell(row03Cell002, "  月  日  时", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row03Cell002, "   月   日   时", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
 
         XWPFTableRow row04 = table.getRow(5);
         row04.setHeight(563);
         XWPFTableCell row04Cell01 = row04.getCell(0);
-        fillCell(row04Cell01, "加班类别", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 1711);
+        fillCell(row04Cell01, "加班类别", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 1711);
 
         XWPFTableCell row04Cell02 = row04.getCell(1);
-        fillCell(row04Cell02, "□工作日   □双休日   □节假日", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row04Cell02, "□工作日   □双休日   □节假日", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
 
         addNewMerge(table, 5, 5, 1, 3);
 
         XWPFTableRow row05 = table.getRow(6);
         row05.setHeight(563);
         XWPFTableCell row05Cell01 = row05.getCell(0);
-        fillCell(row05Cell01, "加班内容", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 1711);
+        fillCell(row05Cell01, "加班内容", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 1711);
 
         addNewMerge(table, 6, 14, 0, 0);
         addNewMerge(table, 6, 14, 1, 3);
@@ -106,13 +103,13 @@ public class MainApp017 {
         XWPFTableRow row06 = table.getRow(15);
         row06.setHeight(563);
         XWPFTableCell row06Cell01 = row06.getCell(0);
-        fillCell(row06Cell01, "科长或秘书", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 1711);
+        fillCell(row06Cell01, "科长或秘书", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 1711);
 
         addNewMerge(table, 15, 16, 0, 0);
         addNewMerge(table, 15, 16, 1, 1);
         XWPFTableCell row06Cell02 = row06.getCell(2);
-        fillCell(row06Cell02, "本单位主要负责人\n" +
-                "签字：\n", "华文仿宋", ParagraphAlignment.CENTER, TextAlignment.CENTER, false, 12, 2422);
+        fillCell(row06Cell02, "本单位主要负责人    " +
+                "签字：", "华文仿宋", STVerticalJc.CENTER, STJc.CENTER, false, 12, 2422);
 
         addNewMerge(table, 15, 16, 2, 2);
         addNewMerge(table, 15, 16, 3, 3);
@@ -146,13 +143,14 @@ public class MainApp017 {
         System.out.println(list);
     }
 
-    private static void fillCell(XWPFTableCell cell, String text, String font, ParagraphAlignment paragraphAlignment, TextAlignment textAlignment, boolean bold, int fontSize, int cellWidth) {
+    private static void fillCell(XWPFTableCell cell, String text, String font, STVerticalJc.Enum vAlign, STJc.Enum hAlign, boolean bold, int fontSize, int cellWidth) {
 
-        CTTcPr cellPr = cell.getCTTc().addNewTcPr();
+        CTTc ctTc = cell.getCTTc();
+        CTTcPr cellPr = ctTc.addNewTcPr();
         cellPr.addNewTcW().setW(BigInteger.valueOf(cellWidth));
+        cellPr.addNewVAlign().setVal(vAlign);//垂直对齐方式
+        ctTc.getPList().get(0).addNewPPr().addNewJc().setVal(hAlign);
         XWPFParagraph para = cell.getParagraphs().get(0);
-        para.setAlignment(paragraphAlignment);//文字对齐方式(左、右、中)
-        para.setVerticalAlignment(textAlignment);
         XWPFRun run = para.createRun();
         run.setText(text);
         run.setBold(bold);//是否加粗

@@ -5,13 +5,13 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.boot.data.dao.UserRepository;
 import com.boot.data.dto.Result;
+import com.boot.data.entity.Product;
 import com.boot.data.entity.Production;
 import com.boot.data.entity.User;
 import com.boot.data.service.ProductService;
 import com.boot.data.util.DateUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.build.HashCodeAndEqualsPlugin;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -28,7 +28,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -36,13 +39,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Exchanger;
 
 /**
  * @author 98548
@@ -60,6 +61,9 @@ public class TestController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private TestService testService;
 
     @Value("${path123}")
     private String path123;
@@ -264,11 +268,20 @@ public class TestController {
         return jsonObject.toString();
     }
 
-    @GetMapping(value = "/test014")
+    @GetMapping(value = "/test015")
     public Result test014() {
+
         Page<Production> productionPage = productService.getAll();
         Result result = new Result();
         result.setResult(productionPage);
+        return result;
+    }
+
+    @GetMapping(value = "/test014")
+    public Result test015() {
+        List<Product> list = testService.test();
+        Result result = new Result();
+        result.setResult(list);
         return result;
     }
 
@@ -298,5 +311,11 @@ public class TestController {
             throw new Exception("文件下载失败!");
         }
         return;
+    }
+
+    @GetMapping("/test111")
+    public List test111(String s) {
+        List list = testService.test111(s);
+        return list;
     }
 }
