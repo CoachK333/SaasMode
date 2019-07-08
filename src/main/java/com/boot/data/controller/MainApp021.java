@@ -3,6 +3,9 @@ package com.boot.data.controller;
 import com.alibaba.fastjson.JSON;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 98548
@@ -11,8 +14,20 @@ import java.io.IOException;
  */
 public class MainApp021 {
     public static void main(String[] args) throws IOException {
-        int[] ints = twoSum(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}, 10);
-        System.out.println(JSON.toJSONString(ints));
+
+
+        double ceil = Math.ceil((double) (31 - (7 - 0)) / 7);
+        int i = (int) ceil;
+        System.out.println(i);
+
+        LocalDate now = LocalDate.now();
+        for (int i1 = 0; i1 < 10000; i1++) {
+            now = now.plusDays(1);
+            if (!now.isLeapYear() && now.getMonthValue() == 2 && now.getDayOfMonth() == 1 && now.getDayOfWeek().getValue() == 7) {
+                System.out.println(JSON.toJSONString(now));
+            }
+        }
+
     }
 
     /**
@@ -32,7 +47,36 @@ public class MainApp021 {
                 }
             }
         }
+        throw new IllegalArgumentException("No two sum solution");
+    }
 
+
+    public static int[] twoSum1(int[] nums, int target) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            int i1 = target - nums[i];
+            if (map.containsKey(i1) && map.get(i1) != i) {
+                return new int[]{i, map.get(i1)};
+            }
+        }
+
+        throw new IllegalArgumentException("No two sum solution");
+    }
+
+    public static int[] twoSum2(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int i1 = target - nums[i];
+            if (map.containsKey(i1)) {
+                return new int[]{i, map.get(i1)};
+            }
+            map.put(nums[i], i);
+        }
         throw new IllegalArgumentException("No two sum solution");
     }
 }
