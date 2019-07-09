@@ -4,11 +4,11 @@ import com.boot.data.entity.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * @author 98548
@@ -117,9 +117,70 @@ public class MainAppLambda {
         R method1(T t1, T t2);
     }
 
-
     private Long countNums(Long l1, Long l2, OperateNum operateNum) {
         return (Long) operateNum.method1(l1, l2);
+    }
+
+    /**
+     * java8 内置 四大核心函数式接口
+     * {@link Consumer}     消费型接口
+     * {@link Supplier}     供给型接口
+     * {@link Function}     函数型接口
+     * {@link Predicate}    断言型接口
+     */
+    @Test
+    public void test9() {
+        happy(10000, x -> System.out.println("每次大保健消费: ¥" + x / 10));
+
+    }
+
+    private void happy(double money, Consumer<Double> consumer) {
+        consumer.accept(money);
+    }
+
+    @Test
+    public void test10() {
+        List<Integer> numList = getNumList(10, () -> (int) (Math.random() * 100));
+        numList.forEach(System.out::println);
+    }
+
+    private List<Integer> getNumList(int num, Supplier<Integer> supplier) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < num; i++) {
+            list.add(supplier.get());
+        }
+        return list;
+    }
+
+    @Test
+    public void test11() {
+        System.out.println(strHandler("123Avbswjidfhuisdf", str -> str.toUpperCase()));
+        System.out.println(strHandler("123Avbswjidfhuisdf", str -> str.substring(2, 10)));
+    }
+
+
+    private String strHandler(String str, Function<String, String> fun) {
+        return fun.apply(str);
+    }
+
+    @Test
+    public void test12() {
+        List<String> strings = Arrays.asList("qiwe", "qwe0qw", "qwe9781", "lambda");
+        List<String> list = filterStr(strings, x -> x.length() > 4);
+        list.forEach(System.out::println);
+    }
+
+    private List<String> filterStr(List<String> list, Predicate<String> predicate) {
+        List<String> strList = new ArrayList<>();
+        for (String s : list) {
+            if (predicate.test(s)) {
+                strList.add(s);
+            }
+        }
+        return strList;
+
+//        return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
 }
