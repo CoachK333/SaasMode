@@ -160,6 +160,13 @@ public class MainApp022 {
                 .collect(Collectors.joining("、")));
     }
 
+    @Test
+    public void test5() {
+
+        System.out.println((double) (1 / 7));
+
+        System.out.println(100 / 60);
+    }
 
 
 }
