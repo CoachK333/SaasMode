@@ -5,10 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
+import java.util.stream.Collectors;
 
 /**
  * @author 98548
@@ -178,9 +176,57 @@ public class MainAppLambda {
                 strList.add(s);
             }
         }
-        return strList;
+//        return strList;
 
-//        return list.stream().filter(predicate).collect(Collectors.toList());
+        return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
+    //---------------------------------------方法引用-------------------------------------------
+    //对象::实例方法名
+    @Test
+    public void test013() {
+        Consumer<String> consumer = System.out::println;
+        consumer.accept("x");
+    }
+
+    @Test
+    public void test014() {
+        Supplier<Integer> supplier = new Employee()::getAge;
+        System.out.println(supplier.get());
+    }
+
+    //类 :: 静态方法名
+    @Test
+    public void test015() {
+        Comparator<Integer> comparator = Integer::compare;
+        Comparator<Integer> comparator1 = Integer::compareTo;
+
+        System.out.println(comparator.compare(1, 2));
+    }
+
+    //类 :: 实例方法名
+    @Test
+    public void test016() {
+        BiPredicate<String, String> predicate = (x, y) -> x.equals(y);
+        BiPredicate<String, String> predicate1 = String::equals;
+    }
+
+
+    //--------------------------------------------构造器引用--------------------------------------
+    @Test
+    public void test017() {
+        Supplier<Employee> supplier = Employee::new;
+
+        BiFunction<Integer, Integer, Employee> function = Employee::new;
+        System.out.println(function.apply(123, 23));
+    }
+
+    @Test
+    public void test018() {
+        Function<Integer, String[]> function = x -> new String[x];
+        Function<Integer, String[]> function1 = String[]::new;
+
+        System.out.println(function.apply(10).length);
+        System.out.println(function1.apply(101).length);
+    }
 }
