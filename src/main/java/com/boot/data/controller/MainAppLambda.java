@@ -54,8 +54,10 @@ public class MainAppLambda {
 
     @Test
     public void test4() {
-        Comparator<Integer> comparator = (x, y) -> Integer.compare(x, y);
+        Comparator<Integer> comparator = Integer::compare;  //方法引用(类::静态方法名)
         System.out.println(comparator.compare(1, 2));
+        Comparator<Integer> comparator1 = Integer::compareTo;//方法引用(类::实例方法名)
+        System.out.println(comparator1.compare(1, 2));
     }
 
     @Test
