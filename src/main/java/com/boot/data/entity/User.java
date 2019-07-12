@@ -3,11 +3,11 @@ package com.boot.data.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
+import java.util.Date;
 
 /**
  * @author 98548
@@ -34,5 +34,6 @@ public class User implements Serializable {
 
     @Column(columnDefinition = "text comment '富文本描述'")
     private String comment;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createDate;
 }

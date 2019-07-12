@@ -3,35 +3,30 @@ package com.boot.data.controller;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import com.boot.data.dao.DutyRepository;
 import com.boot.data.dao.UserRepository;
 import com.boot.data.dto.Result;
+import com.boot.data.entity.Duty;
 import com.boot.data.entity.Product;
 import com.boot.data.entity.Production;
 import com.boot.data.entity.User;
 import com.boot.data.service.ProductService;
 import com.boot.data.util.DateUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -39,11 +34,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * @author 98548
@@ -58,6 +55,8 @@ public class TestController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private DutyRepository dutyRepository;
 
     @Autowired
     private ProductService productService;
@@ -102,76 +101,65 @@ public class TestController {
         return JSON.toJSONString(exo);
     }
 
-    @PostMapping("/test003")
-    public String test003(MultipartFile file) {
-        List<VOExcelData> list = new ArrayList();
-
-        try (InputStream inputStream = file.getInputStream()) {
-
-            Workbook workbook = new HSSFWorkbook(inputStream);
-            Sheet sheet001 = workbook.getSheetAt(0);
-            int i0 = sheet001.getFirstRowNum();
-            int iend = sheet001.getLastRowNum();
-
-            System.out.println(i0);
-            System.out.println(iend);
-
-            Row row001 = sheet001.getRow(i0);
-            short j0 = row001.getFirstCellNum();
-            short jend = row001.getLastCellNum();
-            System.out.println(j0);
-            System.out.println(jend);
-
-            String date_prefix = row001.getCell(0).getStringCellValue();
-            String dayStr = row001.getCell(1).getStringCellValue();
-            String yearStr = date_prefix.substring(0, 4);
-            String monthStr = date_prefix.substring(4, 6);
-
-            LocalDate startDate;
-
-
-            Set<String> dutyTypes = new HashSet<>();
-            for (int i = i0 + 2; i <= iend; i++) {
-                Row row = sheet001.getRow(i);
-                startDate = LocalDate.of(Integer.parseInt(yearStr), Integer.parseInt(monthStr), Integer.parseInt(dayStr));
-                for (short j = (short) (j0 + 1); j < jend; j++) {
-                    VOExcelData voExcelData = new VOExcelData();
-
-                    voExcelData.setDate(DateUtils.localdateToDate(startDate));
-                    voExcelData.setName(row.getCell(j0).getStringCellValue());
-                    String content = row.getCell(j).getStringCellValue();
-                    voExcelData.setContent(content);
-                    dutyTypes.add(content);
-                    list.add(voExcelData);
-                    startDate = startDate.plusDays(1);
-                }
-            }
-            System.out.println(JSON.toJSONString(list));
-            System.out.println(dutyTypes);
-            for (VOExcelData voExcelData : list) {
-                String content = voExcelData.getContent();
-
-
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    @PostMapping("/zbDetails")
+    @ApiOperation("值班情况展示--按照(周/组别)展示值班情况")
+    public String zbDetails(@ApiParam("年和月份（yyyyMMdd）开始") @RequestParam String start,
+                            @ApiParam("年和月份（yyyyMMdd）结束") @RequestParam String end,
+                            @ApiParam("类型ID 可不传（所有类型）") @RequestParam(required = false, defaultValue = "") String type) throws ParseException {
+        if (org.apache.commons.lang3.StringUtils.isAnyBlank(start, end)) {
+            return new String("参数为空!");
         }
-        return JSON.toJSONString(list);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+        Date st, en;
+
+        st = sdf.parse(start);
+        en = sdf.parse(end);
+
+        return sdf.format(st) + sdf.format(en);
     }
 
-    @GetMapping("/test004")
-    public String test004(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<User> users = userRepository.list(pageable);
-        System.out.println(users.getTotalElements());
-        System.out.println(users.getNumberOfElements());
-        System.out.println(users.getNumber());
-        System.out.println(users.getTotalPages());
-        System.out.println(users.getSize());
-        return JSON.toJSONString(users.getContent());
+    @GetMapping("/test003")
+    public List<Duty> test003(String start, String end) throws ParseException {
+
+        LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        LocalDateTime startTime = LocalDateTime.of(startDate, LocalTime.MIN);
+        LocalDateTime endTime = LocalDateTime.of(endDate, LocalTime.MAX);
+
+        List<Duty> duties = dutyRepository.getDutiesByTimeZone(DateUtils.localDateTime2Date(startTime), DateUtils.localDateTime2Date(endTime));
+        Map<LocalDate, List<Duty>> map = new HashMap<>();
+        for (Duty duty : duties) {
+            Date dutyStartDate0 = duty.getDutyStartDate();
+            LocalDate localDate = DateUtils.date2LocalDate(dutyStartDate0);
+            if (!map.containsKey(localDate)) {
+                List<Duty> dutyList = new ArrayList<>();
+                dutyList.add(duty);
+                map.put(localDate, dutyList);
+            } else {
+                List<Duty> dutyList = map.get(localDate);
+                dutyList.add(duty);
+            }
+        }
+        return duties;
+    }
+
+
+    @PutMapping("/test004")
+    public String test004(Long id) {
+        User one = userRepository.getOne(id);
+        one.setDesc("hahah");
+
+        User user = new User();
+        user.setName("zhangxiaosan");
+        user.setCreateDate(DateUtils.localDateTime2Date(LocalDateTime.of(LocalDate.now(), LocalTime.MAX)));
+
+        List<User> users = new ArrayList<>();
+        users.add(one);
+        users.add(user);
+        userRepository.saveAll(users);
+        return "ok";
     }
 
     @GetMapping("/test005")
