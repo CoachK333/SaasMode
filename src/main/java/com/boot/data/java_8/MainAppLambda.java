@@ -1,4 +1,4 @@
-package com.boot.data.controller;
+package com.boot.data.java_8;
 
 import com.boot.data.entity.Employee;
 import lombok.extern.slf4j.Slf4j;

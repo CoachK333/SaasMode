@@ -1,7 +1,10 @@
-package com.boot.data.controller;
+package com.boot.data.java_8;
 
 import com.alibaba.fastjson.JSON;
 import com.boot.data.entity.Employee;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
@@ -257,5 +260,32 @@ public class MainAppStream {
                 .collect(Collectors.joining(",")));
     }
 
+    @Test
+    public void test17() {
+        System.out.println(getGodnessName(Optional.ofNullable(null)));
 
+    }
+
+    private String getGodnessName(Optional<Man> optional) {
+        return optional.orElse(new Man())
+                .getGodness()
+                .orElse(new Godness("如花"))
+                .getName();
+    }
+
+    //获取男人心中的女神名字
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class Man {
+        private Optional<Godness> godness = Optional.empty();
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class Godness {
+        private String name;
+    }
 }

@@ -1,4 +1,4 @@
-package com.boot.data.controller;
+package com.boot.data.java_8;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
