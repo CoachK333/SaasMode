@@ -74,6 +74,8 @@ public class TestController {
     private String zdAuth;
     @Value("${zdurl.auth.headers.Referer}")
     private String zdAuthHeaderRefer;
+    @Value("${temp.str:false}")
+    private String tempStr;
 
     @PostMapping("/add")
     public String addOne(String code, String name) {
@@ -305,5 +307,10 @@ public class TestController {
     public List test111(String s) {
         List list = testService.test111(s);
         return list;
+    }
+
+    @GetMapping("/test112")
+    public String test112() {
+        return tempStr;
     }
 }

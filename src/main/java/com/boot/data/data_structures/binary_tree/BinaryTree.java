@@ -1,7 +1,5 @@
 package com.boot.data.data_structures.binary_tree;
 
-import java.util.Currency;
-
 /**
  * @author 98548
  * @create 2019-04-16 10:07
@@ -215,5 +213,6 @@ public class BinaryTree implements Tree {
         System.out.println(bt.findMax().data);
         System.out.println(bt.findMin().data);
         System.out.println(bt.find(100));
-        System.out.println(bt.find(200));    }
+        System.out.println(bt.find(200));
+    }
 }
